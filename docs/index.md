@@ -4,6 +4,7 @@ High-performance H3 cell boundary tracing and polygon operations with C++ accele
 
 ## Quick Links
 
+- [🗺️ Interactive Demo](demo.html) ⭐ **NEW**
 - [API Reference](api_reference.md)
 - [Concepts](concepts.md)
 - [GitHub Repository](https://github.com/Khoshkhah/h3-toolkit)

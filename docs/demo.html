@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H3-Toolkit Interactive Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; }
+        .header { background: linear-gradient(135deg, #238636 0%, #1f6feb 100%); padding: 2rem; text-align: center; }
+        .header h1 { color: white; margin-bottom: 0.5rem; }
+        .header p { color: rgba(255,255,255,0.8); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .demo-card { background: #161b22; border-radius: 12px; overflow: hidden; border: 1px solid #30363d; }
+        .demo-card h3 { padding: 1rem; background: #21262d; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        .demo-card h3 span { font-size: 0.8rem; color: #8b949e; font-weight: normal; }
+        .map { height: 350px; }
+        .legend { padding: 1rem; font-size: 0.9rem; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; margin: 0.3rem 0; }
+        .legend-color { width: 20px; height: 4px; border-radius: 2px; }
+        .back-link { color: #58a6ff; text-decoration: none; display: inline-block; margin-bottom: 1rem; }
+        .back-link:hover { text-decoration: underline; }
+        .info-box { background: #21262d; border-radius: 8px; padding: 1rem; margin-bottom: 2rem; border-left: 4px solid #1f6feb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🗺️ H3-Toolkit Interactive Demo</h1>
+        <p>Visual demonstration of boundary tracing and polygon operations</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Documentation</a>
+        
+        <div class="info-box">
+            <strong>Demo Cell:</strong> <code>86283082fffffff</code> (Resolution 6, San Francisco area)<br>
+            <strong>Intermediate Resolution:</strong> 10
+        </div>
+
+        <div class="demo-grid">
+            <!-- Original Cell -->
+            <div class="demo-card">
+                <h3>Original Cell Boundary <span>cell_boundary_to_geojson_cpp()</span></h3>
+                <div id="map1" class="map"></div>
+                <div class="legend">
+                    <div class="legend-item"><div class="legend-color" style="background: #238636;"></div> Original H3 cell boundary</div>
+                </div>
+            </div>
+
+            <!-- Boundary from Children -->
+            <div class="demo-card">
+                <h3>Boundary from Children <span>cell_boundary_from_children_cpp()</span></h3>
+                <div id="map2" class="map"></div>
+                <div class="legend">
+                    <div class="legend-item"><div class="legend-color" style="background: #1f6feb;"></div> Merged boundary at res 10 (240 cells)</div>
+                    <div class="legend-item"><div class="legend-color" style="background: #238636; opacity: 0.5;"></div> Original cell (dashed)</div>
+                </div>
+            </div>
+
+            <!-- Buffered Accurate -->
+            <div class="demo-card">
+                <h3>Buffered Polygon (Accurate) <span>use_convex_hull=False</span></h3>
+                <div id="map3" class="map"></div>
+                <div class="legend">
+                    <div class="legend-item"><div class="legend-color" style="background: #f85149;"></div> Buffered boundary (76m buffer)</div>
+                    <div class="legend-item"><div class="legend-color" style="background: #238636; opacity: 0.5;"></div> Original cell (dashed)</div>
+                </div>
+            </div>
+
+            <!-- Buffered Fast -->
+            <div class="demo-card">
+                <h3>Buffered Polygon (Fast) <span>use_convex_hull=True</span></h3>
+                <div id="map4" class="map"></div>
+                <div class="legend">
+                    <div class="legend-item"><div class="legend-color" style="background: #a371f7;"></div> Convex hull + buffer</div>
+                    <div class="legend-item"><div class="legend-color" style="background: #f85149; opacity: 0.3;"></div> Accurate mode (comparison)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pre-generated demo data
+        const demoData = {
+            center: [37.77, -122.42],
+            cell_boundary: {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-122.40897,37.81284],[-122.44685,37.79142],[-122.44154,37.74629],[-122.39837,37.72261],[-122.36052,37.74404],[-122.36581,37.78916],[-122.40897,37.81284]]]}},
+            boundary_from_children: {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-122.40897,37.81284],[-122.44685,37.79142],[-122.44154,37.74629],[-122.39837,37.72261],[-122.36052,37.74404],[-122.36581,37.78916],[-122.40897,37.81284]]]}},
+            buffered_accurate: {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-122.40831,37.81353],[-122.44751,37.79211],[-122.44220,37.74561],[-122.39771,37.72192],[-122.35986,37.74335],[-122.36517,37.78985],[-122.40831,37.81353]]]}},
+            buffered_fast: {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-122.40897,37.81352],[-122.44753,37.79142],[-122.44154,37.74561],[-122.39837,37.72193],[-122.35984,37.74404],[-122.36581,37.78984],[-122.40897,37.81352]]]}}
+        };
+
+        // Load actual data if available
+        fetch('demo_data.json')
+            .then(r => r.json())
+            .then(data => {
+                initMaps(data);
+            })
+            .catch(() => {
+                initMaps(demoData);
+            });
+
+        function initMaps(data) {
+            const center = data.center || [37.77, -122.42];
+            
+            // Map 1: Original cell
+            const map1 = L.map('map1').setView(center, 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map1);
+            if (data.cell_boundary) {
+                L.geoJSON(data.cell_boundary, {
+                    style: { color: '#238636', weight: 3, fillOpacity: 0.2 }
+                }).addTo(map1);
+            }
+
+            // Map 2: Boundary from children
+            const map2 = L.map('map2').setView(center, 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map2);
+            if (data.cell_boundary) {
+                L.geoJSON(data.cell_boundary, {
+                    style: { color: '#238636', weight: 2, fillOpacity: 0, dashArray: '5,5' }
+                }).addTo(map2);
+            }
+            if (data.boundary_from_children) {
+                L.geoJSON(data.boundary_from_children, {
+                    style: { color: '#1f6feb', weight: 3, fillOpacity: 0.15 }
+                }).addTo(map2);
+            }
+
+            // Map 3: Buffered accurate
+            const map3 = L.map('map3').setView(center, 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map3);
+            if (data.cell_boundary) {
+                L.geoJSON(data.cell_boundary, {
+                    style: { color: '#238636', weight: 2, fillOpacity: 0, dashArray: '5,5' }
+                }).addTo(map3);
+            }
+            if (data.buffered_accurate) {
+                L.geoJSON(data.buffered_accurate, {
+                    style: { color: '#f85149', weight: 3, fillOpacity: 0.15 }
+                }).addTo(map3);
+            }
+
+            // Map 4: Buffered fast vs accurate
+            const map4 = L.map('map4').setView(center, 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map4);
+            if (data.buffered_accurate) {
+                L.geoJSON(data.buffered_accurate, {
+                    style: { color: '#f85149', weight: 2, fillOpacity: 0.1, dashArray: '3,3' }
+                }).addTo(map4);
+            }
+            if (data.buffered_fast) {
+                L.geoJSON(data.buffered_fast, {
+                    style: { color: '#a371f7', weight: 3, fillOpacity: 0.15 }
+                }).addTo(map4);
+            }
+        }
+    </script>
+</body>
+</html>
