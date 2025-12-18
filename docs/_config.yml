@@ -1,0 +1,19 @@
+theme: jekyll-theme-minimal
+title: H3-Toolkit
+description: High-performance H3 cell boundary tracing and polygon operations
+url: https://Khoshkhah.github.io/h3-toolkit
+baseurl: /h3-toolkit
+
+# Navigation
+nav:
+  - Home: index.md
+  - API Reference: api_reference.md
+  - Concepts: concepts.md
+
+# GitHub
+github_username: Khoshkhah
+repository: h3-toolkit
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
