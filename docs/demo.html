@@ -4,38 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H3-Toolkit Demo</title>
+    <title>Interactive Demo - H3-Toolkit</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        body {
-            font-family: system-ui, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background: #f6f8fa;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        h1 {
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #fff;
             color: #24292f;
         }
 
-        .back {
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #f6f8fa;
+            border-right: 1px solid #d0d7de;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
             margin-bottom: 20px;
+            color: #24292f;
         }
 
-        .back a {
-            color: #0969da;
+        .sidebar nav a {
+            display: block;
+            padding: 8px 12px;
+            color: #24292f;
             text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 4px;
         }
 
+        .sidebar nav a:hover {
+            background: #eaeef2;
+        }
+
+        .sidebar nav a.active {
+            background: #0969da;
+            color: white;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 40px;
+            max-width: 900px;
+        }
+
+        .main h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .main>p {
+            color: #656d76;
+            margin-bottom: 30px;
+        }
+
+        /* Demo cards */
         .demo-grid {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .demo-card {
-            background: white;
+            background: #fff;
             border-radius: 8px;
             border: 1px solid #d0d7de;
             overflow: hidden;
@@ -44,9 +92,10 @@
         .demo-card h3 {
             margin: 0;
             padding: 12px 16px;
-            background: #f0f3f6;
+            background: #f6f8fa;
             border-bottom: 1px solid #d0d7de;
-            font-size: 16px;
+            font-size: 15px;
+            font-weight: 600;
         }
 
         .demo-card h3 code {
@@ -57,13 +106,14 @@
         }
 
         .map {
-            height: 300px;
+            height: 320px;
             width: 100%;
         }
 
         .legend {
             padding: 10px 16px;
-            font-size: 14px;
+            font-size: 13px;
+            color: #656d76;
         }
 
         .color-box {
@@ -72,46 +122,65 @@
             height: 4px;
             margin-right: 8px;
             border-radius: 2px;
+            vertical-align: middle;
         }
     </style>
 </head>
 
 <body>
-    <div class="back"><a href="index.html">← Back to Docs</a></div>
-    <h1>🗺️ H3-Toolkit Interactive Demo</h1>
-    <p><strong>Demo Cell:</strong> <code>86283082fffffff</code> (Resolution 6, San Francisco)</p>
+    <div class="layout">
+        <aside class="sidebar">
+            <h2>H3-Toolkit</h2>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="demo.html" class="active">Interactive Demo</a>
+                <a href="api_reference.html">API Reference</a>
+                <a href="concepts.html">Concepts</a>
+            </nav>
+        </aside>
 
-    <div class="demo-grid">
-        <div class="demo-card">
-            <h3>Original Cell Boundary<code>cell_boundary_to_geojson_cpp()</code></h3>
-            <div id="map1" class="map"></div>
-            <div class="legend"><span class="color-box" style="background:#238636"></span>Original H3 cell</div>
-        </div>
+        <main class="main">
+            <h1>🗺️ Interactive Demo</h1>
+            <p><strong>Demo Cell:</strong> <code>86283082fffffff</code> (Resolution 6, San Francisco) &nbsp;|&nbsp;
+                <strong>Intermediate Resolution:</strong> 10</p>
 
-        <div class="demo-card">
-            <h3>Boundary Children<code>children_on_boundary_faces()</code></h3>
-            <div id="map2" class="map"></div>
-            <div class="legend"><span class="color-box" style="background:#f0883e"></span>240 boundary cells at res 10
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>Original Cell Boundary<code>cell_boundary_to_geojson_cpp()</code></h3>
+                    <div id="map1" class="map"></div>
+                    <div class="legend"><span class="color-box" style="background:#238636"></span>Original H3 hexagon
+                        cell</div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>Boundary Children<code>children_on_boundary_faces()</code></h3>
+                    <div id="map2" class="map"></div>
+                    <div class="legend"><span class="color-box" style="background:#f0883e"></span>240 boundary cells at
+                        resolution 10</div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>Merged Boundary<code>cell_boundary_from_children_cpp()</code></h3>
+                    <div id="map3" class="map"></div>
+                    <div class="legend"><span class="color-box" style="background:#1f6feb"></span>All 240 cells merged
+                        into one polygon</div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>Buffered Polygon (Accurate)<code>use_convex_hull=False</code></h3>
+                    <div id="map4" class="map"></div>
+                    <div class="legend"><span class="color-box" style="background:#f85149"></span>Buffered boundary (76m
+                        buffer)</div>
+                </div>
+
+                <div class="demo-card">
+                    <h3>Buffered Polygon (Fast)<code>use_convex_hull=True</code></h3>
+                    <div id="map5" class="map"></div>
+                    <div class="legend"><span class="color-box" style="background:#a371f7"></span>Convex hull + buffer
+                        (30x faster)</div>
+                </div>
             </div>
-        </div>
-
-        <div class="demo-card">
-            <h3>Merged Boundary<code>cell_boundary_from_children_cpp()</code></h3>
-            <div id="map3" class="map"></div>
-            <div class="legend"><span class="color-box" style="background:#1f6feb"></span>All cells merged</div>
-        </div>
-
-        <div class="demo-card">
-            <h3>Buffered (Accurate)<code>use_convex_hull=False</code></h3>
-            <div id="map4" class="map"></div>
-            <div class="legend"><span class="color-box" style="background:#f85149"></span>Buffered 76m</div>
-        </div>
-
-        <div class="demo-card">
-            <h3>Buffered (Fast)<code>use_convex_hull=True</code></h3>
-            <div id="map5" class="map"></div>
-            <div class="legend"><span class="color-box" style="background:#a371f7"></span>Convex hull + buffer</div>
-        </div>
+        </main>
     </div>
 
     <script>
