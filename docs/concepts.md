@@ -12,34 +12,13 @@ H3 is a hierarchical hexagonal grid system. Each cell at resolution `r` has 7 ch
 - 1 **center child** (position 0)
 - 6 **edge children** (positions 1-6)
 
-```
-      Parent (res r)
-     ┌─────────────┐
-    /       0       \
-   / 1    center   2 \
-  /                   \
- |    5           3    |
-  \                   /
-   \ 6             4 /
-    \_______________/
-```
+![H3 Cell Hierarchy](assets/h3_hierarchy.png)
 
 ## Faces
 
 A **face** is a boundary edge of a hexagonal cell. Each hexagon has **6 faces**, numbered 1-6.
 
-```
-        Face 1
-    ╱‾‾‾‾‾‾‾‾‾‾╲
-   /            \
-  /              \
-Face 6          Face 2
-  \              /
-   \            /
-    ╲__________╱
-        Face 4
-      (Face 5 & 3 on sides)
-```
+![H3 Cell Faces](assets/h3_faces.png)
 
 > **Note**: The face numbering follows H3's internal child position convention, not geographic direction.
 

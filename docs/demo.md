@@ -16,10 +16,11 @@ Visual demonstration of boundary tracing and polygon operations.
 .demo-card { background: #f6f8fa; border-radius: 8px; overflow: hidden; border: 1px solid #d0d7de; }
 .demo-card h3 { padding: 0.75rem 1rem; margin: 0; background: #f0f3f6; border-bottom: 1px solid #d0d7de; font-size: 1rem; display: flex; justify-content: space-between; }
 .demo-card h3 code { font-size: 0.8rem; color: #656d76; font-weight: normal; }
-.map { height: 350px; border-bottom: 1px solid #d0d7de; }
+.map { height: 350px !important; width: 100% !important; border-bottom: 1px solid #d0d7de; z-index: 1; }
 .legend { padding: 0.75rem 1rem; font-size: 0.9rem; }
 .legend-item { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
 .legend-color { width: 24px; height: 4px; border-radius: 2px; }
+.leaflet-container { height: 100% !important; width: 100% !important; }
 </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
