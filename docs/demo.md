@@ -4,7 +4,7 @@ title: Interactive Demo
 nav_order: 2
 ---
 
-# 🗺️ Interactive Demo
+# Interactive Demo
 
 Visual demonstration of boundary tracing and polygon operations.
 

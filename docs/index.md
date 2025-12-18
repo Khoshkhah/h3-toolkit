@@ -10,7 +10,7 @@ High-performance H3 cell boundary tracing and polygon operations with C++ accele
 
 ## Quick Links
 
-- [🗺️ Interactive Demo](demo.md) ⭐ **NEW**
+- [Interactive Demo](demo.md)
 - [API Reference](api_reference.md)
 - [Concepts](concepts.md)
 - [GitHub Repository](https://github.com/Khoshkhah/h3-toolkit)
@@ -21,12 +21,12 @@ H3-Toolkit extends Uber's H3 library with efficient algorithms for computing cel
 
 ### Key Features
 
-🚀 **High Performance**
+**High Performance**
 - C++ core with Python bindings via pybind11
 - 10-30x speedup over pure Python
 - Boost.Geometry for polygon operations
 
-📦 **Comprehensive API**
+**Comprehensive API**
 - Boundary tracing across resolutions
 - Buffered polygon generation
 - GeoJSON-compatible output

@@ -15,112 +15,128 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             background: #fff;
-            color: #24292f;
+            color: #1f2328;
+            line-height: 1.5;
+            font-size: 16px;
         }
 
-        /* Layout */
         .layout {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
-            width: 260px;
-            background: #f6f8fa;
-            border-right: 1px solid #d0d7de;
-            padding: 20px;
+            width: 264px;
+            background: #f5f6fa;
+            border-right: 1px solid #e1e4e8;
+            padding: 1.5rem;
+            flex-shrink: 0;
         }
 
-        .sidebar h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #24292f;
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2328;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
         }
 
         .sidebar nav a {
             display: block;
-            padding: 8px 12px;
-            color: #24292f;
+            padding: 0.25rem 0.5rem;
+            margin: 0.125rem 0;
+            color: #57606a;
             text-decoration: none;
-            border-radius: 6px;
-            margin-bottom: 4px;
+            font-size: 0.875rem;
+            border-radius: 4px;
         }
 
         .sidebar nav a:hover {
-            background: #eaeef2;
+            color: #7c3aed;
         }
 
         .sidebar nav a.active {
-            background: #0969da;
-            color: white;
+            color: #7c3aed;
+            font-weight: 600;
+            background: rgba(124, 58, 237, 0.08);
         }
 
-        /* Main content */
         .main {
             flex: 1;
-            padding: 40px;
-            max-width: 900px;
+            padding: 2rem 2.5rem;
+            max-width: 56rem;
         }
 
         .main h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #1f2328;
+            margin-bottom: 0.5rem;
         }
 
         .main>p {
-            color: #656d76;
-            margin-bottom: 30px;
+            color: #57606a;
+            margin-bottom: 1.5rem;
         }
 
-        /* Demo cards */
+        .main code {
+            background: #f5f6fa;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.8125rem;
+        }
+
         .demo-grid {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 1.25rem;
         }
 
         .demo-card {
             background: #fff;
-            border-radius: 8px;
-            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            border: 1px solid #e1e4e8;
             overflow: hidden;
         }
 
         .demo-card h3 {
             margin: 0;
-            padding: 12px 16px;
-            background: #f6f8fa;
-            border-bottom: 1px solid #d0d7de;
-            font-size: 15px;
+            padding: 0.75rem 1rem;
+            background: #f5f6fa;
+            border-bottom: 1px solid #e1e4e8;
+            font-size: 0.875rem;
             font-weight: 600;
+            color: #1f2328;
         }
 
         .demo-card h3 code {
-            color: #656d76;
-            font-weight: normal;
-            font-size: 12px;
-            margin-left: 10px;
+            color: #57606a;
+            font-weight: 400;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            background: transparent;
+            padding: 0;
         }
 
         .map {
-            height: 320px;
+            height: 300px;
             width: 100%;
         }
 
         .legend {
-            padding: 10px 16px;
-            font-size: 13px;
-            color: #656d76;
+            padding: 0.625rem 1rem;
+            font-size: 0.8125rem;
+            color: #57606a;
         }
 
         .color-box {
             display: inline-block;
-            width: 16px;
-            height: 4px;
-            margin-right: 8px;
+            width: 1rem;
+            height: 0.25rem;
+            margin-right: 0.5rem;
             border-radius: 2px;
             vertical-align: middle;
         }
@@ -130,7 +146,7 @@
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <h2>H3-Toolkit</h2>
+            <a href="index.html" class="sidebar-title">H3-Toolkit</a>
             <nav>
                 <a href="index.html">Home</a>
                 <a href="demo.html" class="active">Interactive Demo</a>
@@ -140,7 +156,7 @@
         </aside>
 
         <main class="main">
-            <h1>🗺️ Interactive Demo</h1>
+            <h1>Interactive Demo</h1>
             <p><strong>Demo Cell:</strong> <code>86283082fffffff</code> (Resolution 6, San Francisco) &nbsp;|&nbsp;
                 <strong>Intermediate Resolution:</strong> 10</p>
 
