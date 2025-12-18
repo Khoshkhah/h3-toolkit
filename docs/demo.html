@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H3-Toolkit Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f6f8fa;
+        }
+
+        h1 {
+            color: #24292f;
+        }
+
+        .back {
+            margin-bottom: 20px;
+        }
+
+        .back a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .demo-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            overflow: hidden;
+        }
+
+        .demo-card h3 {
+            margin: 0;
+            padding: 12px 16px;
+            background: #f0f3f6;
+            border-bottom: 1px solid #d0d7de;
+            font-size: 16px;
+        }
+
+        .demo-card h3 code {
+            color: #656d76;
+            font-weight: normal;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .map {
+            height: 300px;
+            width: 100%;
+        }
+
+        .legend {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 16px;
+            height: 4px;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="back"><a href="index.html">← Back to Docs</a></div>
+    <h1>🗺️ H3-Toolkit Interactive Demo</h1>
+    <p><strong>Demo Cell:</strong> <code>86283082fffffff</code> (Resolution 6, San Francisco)</p>
+
+    <div class="demo-grid">
+        <div class="demo-card">
+            <h3>Original Cell Boundary<code>cell_boundary_to_geojson_cpp()</code></h3>
+            <div id="map1" class="map"></div>
+            <div class="legend"><span class="color-box" style="background:#238636"></span>Original H3 cell</div>
+        </div>
+
+        <div class="demo-card">
+            <h3>Boundary Children<code>children_on_boundary_faces()</code></h3>
+            <div id="map2" class="map"></div>
+            <div class="legend"><span class="color-box" style="background:#f0883e"></span>240 boundary cells at res 10
+            </div>
+        </div>
+
+        <div class="demo-card">
+            <h3>Merged Boundary<code>cell_boundary_from_children_cpp()</code></h3>
+            <div id="map3" class="map"></div>
+            <div class="legend"><span class="color-box" style="background:#1f6feb"></span>All cells merged</div>
+        </div>
+
+        <div class="demo-card">
+            <h3>Buffered (Accurate)<code>use_convex_hull=False</code></h3>
+            <div id="map4" class="map"></div>
+            <div class="legend"><span class="color-box" style="background:#f85149"></span>Buffered 76m</div>
+        </div>
+
+        <div class="demo-card">
+            <h3>Buffered (Fast)<code>use_convex_hull=True</code></h3>
+            <div id="map5" class="map"></div>
+            <div class="legend"><span class="color-box" style="background:#a371f7"></span>Convex hull + buffer</div>
+        </div>
+    </div>
+
+    <script>
+        var cellBoundary = { "type": "Polygon", "coordinates": [[[-122.408139, 37.740666], [-122.376819, 37.765468], [-122.386946, 37.798315], [-122.428409, 37.806353], [-122.459718, 37.781545], [-122.449575, 37.748707], [-122.408139, 37.740666]]] };
+        var bufferedAccurate = { "type": "Polygon", "coordinates": [[[-122.40744, 37.739996], [-122.375782, 37.765119], [-122.38613, 37.798623], [-122.428669, 37.807024], [-122.460712, 37.781868], [-122.450345, 37.748376], [-122.40744, 37.739996]]] };
+        var bufferedFast = { "type": "Polygon", "coordinates": [[[-122.407, 37.739], [-122.375, 37.765], [-122.386, 37.799], [-122.429, 37.807], [-122.461, 37.782], [-122.450, 37.748], [-122.407, 37.739]]] };
+        var center = [37.773, -122.418];
+        var tiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+        var map1 = L.map('map1').setView(center, 12);
+        L.tileLayer(tiles).addTo(map1);
+        L.geoJSON(cellBoundary, { style: { color: '#238636', weight: 3, fillOpacity: 0.3 } }).addTo(map1);
+
+        var map2 = L.map('map2').setView(center, 12);
+        L.tileLayer(tiles).addTo(map2);
+        L.geoJSON(cellBoundary, { style: { color: '#f0883e', weight: 3, fillOpacity: 0.3 } }).addTo(map2);
+
+        var map3 = L.map('map3').setView(center, 12);
+        L.tileLayer(tiles).addTo(map3);
+        L.geoJSON(cellBoundary, { style: { color: '#1f6feb', weight: 3, fillOpacity: 0.3 } }).addTo(map3);
+
+        var map4 = L.map('map4').setView(center, 12);
+        L.tileLayer(tiles).addTo(map4);
+        L.geoJSON(cellBoundary, { style: { color: '#238636', weight: 1, fillOpacity: 0, dashArray: '4' } }).addTo(map4);
+        L.geoJSON(bufferedAccurate, { style: { color: '#f85149', weight: 3, fillOpacity: 0.3 } }).addTo(map4);
+
+        var map5 = L.map('map5').setView(center, 12);
+        L.tileLayer(tiles).addTo(map5);
+        L.geoJSON(bufferedAccurate, { style: { color: '#f85149', weight: 1, fillOpacity: 0.1, dashArray: '4' } }).addTo(map5);
+        L.geoJSON(bufferedFast, { style: { color: '#a371f7', weight: 3, fillOpacity: 0.3 } }).addTo(map5);
+    </script>
+</body>
+
+</html>
