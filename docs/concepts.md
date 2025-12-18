@@ -8,7 +8,7 @@ nav_order: 4
 
 ## H3 Hierarchy
 
-H3 is a hierarchical hexagonal grid system. Each cell at resolution `r` has 7 children at resolution `r+1`:
+[H3](https://h3geo.org/) is a hierarchical hexagonal grid system. Each cell at resolution `r` has 7 children at resolution `r+1`:
 - 1 **center child** (position 0)
 - 6 **edge children** (positions 1-6)
 
