@@ -25,6 +25,13 @@ H3-Toolkit extends Uber's H3 library with efficient algorithms for computing cel
 | `get_buffered_h3_polygon` | Simple buffered cell polygon | ✅ |
 | `cell_to_coarsest_ancestor_on_faces` | Find coarsest ancestor on boundary | ✅ |
 
+## 🌐 Interactive Demo
+
+Check out the **[Live Demo](https://khoshkhah.github.io/h3-toolkit/demo.html)** to visualize:
+- Boundary tracing mechanism
+- Comparison of "Accurate" vs "Fast" buffering
+- Interactive maps of H3 cell hierarchies
+
 ## Installation
 
 ### Prerequisites
