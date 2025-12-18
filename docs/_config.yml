@@ -1,20 +1,29 @@
-theme: jekyll-theme-minimal
+remote_theme: just-the-docs/just-the-docs
 title: H3-Toolkit
 description: High-performance H3 cell boundary tracing and polygon operations
-url: https://Khoshkhah.github.io/h3-toolkit
-baseurl: /h3-toolkit
 
 # Navigation
-nav:
-  - Home: index.md
-  - Interactive Demo: demo.md
-  - API Reference: api_reference.md
-  - Concepts: concepts.md
+nav_enabled: true
 
-# GitHub
-github_username: Khoshkhah
-repository: h3-toolkit
+# Footer
+footer_content: "Copyright &copy; 2024 H3-Toolkit Contributors. MIT License."
 
-# Build settings
-markdown: kramdown
-highlighter: rouge
+# Color scheme
+color_scheme: light
+
+# Search
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+
+# Aux links (GitHub button in header)
+aux_links:
+  "GitHub":
+    - "https://github.com/Khoshkhah/h3-toolkit"
+aux_links_new_tab: true
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock

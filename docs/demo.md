@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Interactive Demo
+nav_order: 2
 ---
 
 # 🗺️ Interactive Demo

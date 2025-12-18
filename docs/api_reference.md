@@ -1,3 +1,9 @@
+---
+layout: default
+title: API Reference
+nav_order: 3
+---
+
 # H3-Toolkit API Reference
 
 Complete API documentation for H3-Toolkit.

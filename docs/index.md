@@ -1,3 +1,9 @@
+---
+layout: default
+title: Home
+nav_order: 1
+---
+
 # H3-Toolkit Documentation
 
 High-performance H3 cell boundary tracing and polygon operations with C++ acceleration.

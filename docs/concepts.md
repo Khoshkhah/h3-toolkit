@@ -1,3 +1,9 @@
+---
+layout: default
+title: Concepts
+nav_order: 4
+---
+
 # Core Concepts
 
 ## H3 Hierarchy
