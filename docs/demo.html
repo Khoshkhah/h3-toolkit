@@ -76,8 +76,8 @@
         <div class="main-content-wrap">
             <div class="main-content">
                 <h1 id="interactive-demo">Interactive Demo</h1>
-                <p><strong>Demo Cell:</strong> <code class="language-plaintext highlighter-rouge">86283082fffffff</code>
-                    (Resolution 6, San Francisco) | <strong>Intermediate Resolution:</strong> 10</p>
+                <p><strong>Demo Cell:</strong> <code class="language-plaintext highlighter-rouge">872830828ffffff</code>
+                    (Resolution 7, San Francisco) | <strong>Intermediate Resolution:</strong> 10</p>
 
                 <div class="demo-card">
                     <h3>Original Cell Boundary <code>cell_boundary_to_geojson_cpp()</code></h3>
@@ -89,29 +89,39 @@
                 <div class="demo-card">
                     <h3>Boundary Children <code>children_on_boundary_faces()</code></h3>
                     <div id="map2" class="map-container"></div>
-                    <div class="legend"><span class="color-box" style="background:#f0883e"></span>240 boundary cells at
-                        resolution 10</div>
+                    <div class="legend">
+                        <div><span class="color-box" style="background:#238636"></span>Original Cell</div>
+                        <div><span class="color-box" style="background:#f0883e"></span>Boundary Children (Res 10)</div>
+                    </div>
                 </div>
 
                 <div class="demo-card">
                     <h3>Merged Boundary <code>cell_boundary_from_children_cpp()</code></h3>
                     <div id="map3" class="map-container"></div>
-                    <div class="legend"><span class="color-box" style="background:#1f6feb"></span>All 240 cells merged
-                        into one polygon</div>
+                    <div class="legend">
+                        <div><span class="color-box" style="background:#238636"></span>Original Cell</div>
+                        <div><span class="color-box" style="background:#1f6feb"></span>Merged Boundary</div>
+                    </div>
                 </div>
 
                 <div class="demo-card">
                     <h3>Buffered Polygon (Accurate) <code>use_convex_hull=False</code></h3>
                     <div id="map4" class="map-container"></div>
-                    <div class="legend"><span class="color-box" style="background:#f85149"></span>Buffered boundary
-                        (Auto-calculated buffer)</div>
+                    <div class="legend">
+                        <div><span class="color-box" style="background:#238636"></span>Original Cell</div>
+                        <div><span class="color-box" style="background:#f85149"></span>Buffered (Auto margin)</div>
+                    </div>
                 </div>
 
                 <div class="demo-card">
                     <h3>Buffered Polygon (Fast) <code>use_convex_hull=True</code></h3>
                     <div id="map5" class="map-container"></div>
-                    <div class="legend"><span class="color-box" style="background:#a371f7"></span>Convex hull + buffer
-                        (30x faster)</div>
+                    <div class="legend">
+                        <div><span class="color-box" style="background:#238636"></span>Original Cell</div>
+                        <div><span class="color-box" style="background:#f85149; opacity: 0.5"></span>Accurate
+                            (Reference)</div>
+                        <div><span class="color-box" style="background:#a371f7"></span>Fast (Convex Hull)</div>
+                    </div>
                 </div>
             </div>
         </div>
