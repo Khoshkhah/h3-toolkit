@@ -98,7 +98,8 @@ const map4 = L.map('map4').setView(center, 13);
 L.tileLayer(tileUrl).addTo(map4);
 
 // Load data
-fetch('demo_data.json')
+const baseUrl = '/h3-toolkit/';
+fetch(baseUrl + 'demo_data.json')
   .then(r => r.json())
   .then(data => {
     // Map 1: Original cell
@@ -118,12 +119,14 @@ fetch('demo_data.json')
     // Map 4: Comparison
     L.geoJSON(data.buffered_accurate, { style: { color: '#f85149', weight: 2, fillOpacity: 0.1, dashArray: '3,3' } }).addTo(map4);
     L.geoJSON(data.buffered_fast, { style: { color: '#a371f7', weight: 3, fillOpacity: 0.15 } }).addTo(map4);
-  });
+  })
+  .catch(e => console.error('Failed to load demo_data.json:', e));
 
 // Load boundary children
-fetch('boundary_children.json')
+fetch(baseUrl + 'boundary_children.json')
   .then(r => r.json())
   .then(data => {
     L.geoJSON(data, { style: { color: '#f0883e', weight: 1, fillOpacity: 0.4 } }).addTo(map5);
-  });
+  })
+  .catch(e => console.error('Failed to load boundary_children.json:', e));
 </script>
