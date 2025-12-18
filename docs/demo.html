@@ -119,13 +119,11 @@
 
     <script src="demo_data.js"></script>
     <script>
-        // Data for Map 1, 4, 5 (Small enough to keep inline)
+        // Data for Map 1 is inline. Maps 2-5 load from demo_data.js
         var cellBoundary = { "type": "Polygon", "coordinates": [[[-122.408139, 37.740666], [-122.376819, 37.765468], [-122.386946, 37.798315], [-122.428409, 37.806353], [-122.459718, 37.781545], [-122.449575, 37.748707], [-122.408139, 37.740666]]] };
-        var bufferedAccurate = { "type": "Polygon", "coordinates": [[[-122.40744, 37.739996], [-122.375782, 37.765119], [-122.38613, 37.798623], [-122.428669, 37.807024], [-122.460712, 37.781868], [-122.450345, 37.748376], [-122.40744, 37.739996]]] };
-        var bufferedFast = { "type": "Polygon", "coordinates": [[[-122.407, 37.739], [-122.375, 37.765], [-122.386, 37.799], [-122.429, 37.807], [-122.461, 37.782], [-122.450, 37.748], [-122.407, 37.739]]] };
 
         var center = [37.773, -122.418];
-        var tiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var tiles = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
 
         // Map 1: Original Cell
         var map1 = L.map('map1').setView(center, 12);
@@ -154,13 +152,19 @@
         var map4 = L.map('map4').setView(center, 12);
         L.tileLayer(tiles).addTo(map4);
         L.geoJSON(cellBoundary, { style: { color: '#238636', weight: 1, fillOpacity: 0, dashArray: '4' } }).addTo(map4);
-        L.geoJSON(bufferedAccurate, { style: { color: '#f85149', weight: 3, fillOpacity: 0.3 } }).addTo(map4);
+        if (typeof bufferedAccurate !== 'undefined') {
+            L.geoJSON(bufferedAccurate, { style: { color: '#f85149', weight: 3, fillOpacity: 0.3 } }).addTo(map4);
+        }
 
         // Map 5: Buffered Fast
         var map5 = L.map('map5').setView(center, 12);
         L.tileLayer(tiles).addTo(map5);
-        L.geoJSON(bufferedAccurate, { style: { color: '#f85149', weight: 1, fillOpacity: 0.1, dashArray: '4' } }).addTo(map5);
-        L.geoJSON(bufferedFast, { style: { color: '#a371f7', weight: 3, fillOpacity: 0.3 } }).addTo(map5);
+        if (typeof bufferedAccurate !== 'undefined') {
+            L.geoJSON(bufferedAccurate, { style: { color: '#f85149', weight: 1, fillOpacity: 0.1, dashArray: '4' } }).addTo(map5);
+        }
+        if (typeof bufferedFast !== 'undefined') {
+            L.geoJSON(bufferedFast, { style: { color: '#a371f7', weight: 3, fillOpacity: 0.3 } }).addTo(map5);
+        }
     </script>
 </body>
 
