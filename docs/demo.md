@@ -98,8 +98,8 @@ L.tileLayer(tileUrl).addTo(map3);
 const map4 = L.map('map4').setView(center, 13);
 L.tileLayer(tileUrl).addTo(map4);
 
-// Load data
-const baseUrl = '/h3-toolkit/';
+// Load data from raw GitHub
+const baseUrl = 'https://raw.githubusercontent.com/Khoshkhah/h3-toolkit/master/docs/';
 fetch(baseUrl + 'demo_data.json')
   .then(r => r.json())
   .then(data => {
