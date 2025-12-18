@@ -12,13 +12,13 @@ nav_order: 4
 - 1 **center child** (position 0)
 - 6 **edge children** (positions 1-6)
 
-![H3 Cell Hierarchy](assets/h3_hierarchy.svg)
+<img src="assets/h3_hierarchy_v2.png" alt="H3 Cell Hierarchy" width="400">
 
 ## Faces
 
 A **face** is a boundary edge of a hexagonal cell. Each hexagon has **6 faces**, numbered 1-6.
 
-![H3 Cell Faces](assets/h3_faces.svg)
+<img src="assets/h3_faces.svg" alt="H3 Cell Faces" width="400">
 
 > **Note**: The face numbering follows H3's internal child position convention, not geographic direction.
 
