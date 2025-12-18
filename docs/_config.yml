@@ -7,6 +7,7 @@ baseurl: /h3-toolkit
 # Navigation
 nav:
   - Home: index.md
+  - Interactive Demo: demo.md
   - API Reference: api_reference.md
   - Concepts: concepts.md
 
